@@ -123,18 +123,6 @@ erDiagram
         datetime lastLogin
     }
 
-    note right of USUARIO::userType
-        Pode ser: Admin, Librarian, Reader
-    end note
-
-    note right of USUARIO::libraryCard
-        Gerado Automaticamente
-    end note
-
-    note right of USUARIO::status
-        Pode ser: Active, Suspended, Pending
-    end note
-
     BOOK {
         int id PK
         string title
@@ -158,10 +146,6 @@ erDiagram
         string status
     }
 
-    note right of LOAN::status
-        Pode ser: Active, Late, Returned
-    end note
-
     RESERVATION {
         int id PK
         int userId FK
@@ -169,10 +153,6 @@ erDiagram
         date reservationDate
         string status
     }
-
-    note right of LOAN::status
-        Pode ser: Active, Canceled, Attended
-    end note
 
     USER ||--o{ LOAN : realiza
     BOOK ||--o{ LOAN : contem
