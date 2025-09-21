@@ -114,7 +114,7 @@ erDiagram
         string nome
         string email
         string senha
-        string tipo  // Admin, Bibliotecário, Leitor
+        string tipo  
     }
 
     LIVRO {
@@ -133,13 +133,13 @@ erDiagram
         date data_emprestimo
         date data_prevista
         date data_devolucao
-        string status  // Ativo, Devolvido, Atrasado
+        string status  
     }
 
     RESERVA {
         int id PK
         date data_reserva
-        string status // Ativa, Atendida, Cancelada
+        string status 
     }
 
     CATEGORIA {
