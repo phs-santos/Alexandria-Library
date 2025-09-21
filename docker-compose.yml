@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: alexandria-library-mysql
+    restart: always
+    env_file: .env
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+volumes:
+  mysql_data:

@@ -1,0 +1,94 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id               Int      @id @default(autoincrement())
+    name             String
+    email            String   @unique
+    passwordHash     String
+    userType         UserType
+    registrationDate DateTime @default(now())
+
+    libraryCard    String?    @unique
+    phone          String?
+    status         UserStatus @default(Pending)
+    membershipDate DateTime?
+    lastLogin      DateTime?
+
+    // Relacionamentos
+    loans        Loan[]
+    reservations Reservation[]
+}
+
+model Book {
+    id                Int    @id @default(autoincrement())
+    title             String
+    author            String
+    isbn              String @unique
+    category          String
+    publisher         String
+    publicationYear   Int
+    totalQuantity     Int
+    quantityAvailable Int
+    coverUrl          String
+
+    // Relacionamentos
+    loans        Loan[]
+    reservations Reservation[]
+}
+
+model Loan {
+    id                 Int        @id @default(autoincrement())
+    userId             Int
+    bookId             Int
+    loanDate           DateTime   @default(now())
+    expectedReturnDate DateTime
+    returnDate         DateTime?
+    status             LoanStatus @default(Active)
+
+    // Relacionamentos
+    user User @relation(fields: [userId], references: [id])
+    book Book @relation(fields: [bookId], references: [id])
+}
+
+model Reservation {
+    id              Int               @id @default(autoincrement())
+    userId          Int
+    bookId          Int
+    reservationDate DateTime          @default(now())
+    status          ReservationStatus @default(Active)
+
+    // Relacionamentos
+    user User @relation(fields: [userId], references: [id])
+    book Book @relation(fields: [bookId], references: [id])
+}
+
+enum UserType {
+    Admin
+    Librarian
+    Reader
+}
+
+enum UserStatus {
+    Active
+    Suspended
+    Pending
+}
+
+enum LoanStatus {
+    Active
+    Late
+    Returned
+}
+
+enum ReservationStatus {
+    Active
+    Canceled
+    Attended
+}
