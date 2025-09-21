@@ -158,7 +158,6 @@ erDiagram
     BOOK ||--o{ LOAN : contem
     USER ||--o{ RESERVATION : faz
     BOOK ||--o{ RESERVATION : pertence
-
 ```
 
 ---
